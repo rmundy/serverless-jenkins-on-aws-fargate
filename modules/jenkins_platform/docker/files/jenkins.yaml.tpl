@@ -14,9 +14,9 @@ jenkins:
     authorizationStrategy:
         globalMatrix:
             grantedPermissions:
-                - "Overall/Read:anonymous"
-                - "Job/Read:anonymous"
-                - "View/Read:anonymous"
+                - "Overall/Read:authenticated"
+                - "Job/Read:authenticated"
+                - "View/Read:authenticated"
                 - "Overall/Administer:authenticated"
     crumbIssuer: "standard"
     slaveAgentPort: 50000
@@ -30,10 +30,10 @@ jenkins:
               retentionTimeout: 10
               jenkinsUrl: "http://${jenkins_cloud_map_name}:${jenkins_controller_port}"
               templates:
-                  - assignPublicIp: true
-                    cpu: "512"
+                  - cpu: "512"
                     image: "jenkins/inbound-agent"
                     label: "build-example-spot"
+                    executionRole: ${execution_role_arn}
                     launchType: "FARGATE"
                     memory: 0
                     memoryReservation: 1024
@@ -54,10 +54,10 @@ jenkins:
               retentionTimeout: 10
               jenkinsUrl: "http://${jenkins_cloud_map_name}:${jenkins_controller_port}"
               templates:
-                  - assignPublicIp: true
-                    cpu: "512"
+                  - cpu: "512"
                     image: "jenkins/inbound-agent"
                     label: "build-example"
+                    executionRole: ${execution_role_arn}
                     launchType: "FARGATE"
                     memory: 0
                     memoryReservation: 1024
